@@ -1,15 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lotto
 {
     class Program
     {
         static void Main()
+        {
+            var result = new List<int>();
+            for (;;)
+            {
+                result = Pick6OutOf49();
+                if (result.Contains(6) && result.Contains(29))
+                {
+                    break;
+                }
+            }
+
+            result.ForEach(Console.WriteLine);
+            Console.ReadKey();
+        }
+
+        private static List<int> Pick6OutOf49()
         {
             const int numberOfBalls = 49;
             const int choosen = 6;
@@ -24,14 +37,8 @@ namespace Lotto
                 result.Add(balls[nextPick]);
                 balls.RemoveAt(nextPick);
             }
-
-
-
             result = result.OrderBy(ball => ball).ToList();
-
-
-            result.ForEach(Console.WriteLine);
-            Console.ReadKey();
+            return result;
         }
     }
 }
