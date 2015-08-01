@@ -31,7 +31,7 @@ namespace Lotto
 
             var result = new List<int>();
 
-            for (int i = 0; i <= choosen; i++)
+            for (int i = 0; i < choosen; i++)
             {
                 var nextPick = random.Next(balls.Count - 1);
                 result.Add(balls[nextPick]);
