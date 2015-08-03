@@ -8,30 +8,33 @@ namespace Lotto
     {
         static void Main()
         {
-            var result = new List<int>();
-            for (;;)
-            {
-                result = Pick6OutOf49();
-                if (result.Contains(6) && result.Contains(29))
-                {
-                    break;
-                }
-            }
+            var result = Pick6OutOf49(6, 29);
 
             result.ForEach(Console.WriteLine);
             Console.ReadKey();
         }
 
-        private static List<int> Pick6OutOf49()
+        private static List<int> Pick6OutOf49(params int[] alreadySetBalls)
         {
+            const int ballsToChoose = 6;
+            if (alreadySetBalls.Length > ballsToChoose)
+            {
+                throw new ArgumentException("Too many balls choosen!");
+            }
             const int numberOfBalls = 49;
-            const int choosen = 6;
+
             var balls = Enumerable.Range(1, numberOfBalls).ToList();
             var random = new Random();
 
             var result = new List<int>();
 
-            for (int i = 0; i < choosen; i++)
+            foreach (var ball in alreadySetBalls)
+            {
+                result.Add(ball);
+                balls.Remove(ball);
+            }
+
+            for (int i = 0; i < ballsToChoose - alreadySetBalls.Length; i++)
             {
                 var nextPick = random.Next(balls.Count - 1);
                 result.Add(balls[nextPick]);
